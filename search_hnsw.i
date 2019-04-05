@@ -1,0 +1,25 @@
+%module search_hnsw
+
+%{
+    #define SWIG_FILE_WITH_INIT
+    #include "search_hnsw.h"
+%}
+
+%include "numpy.i"
+%include "typemaps.i"
+
+%init %{
+    import_array();
+%}
+
+%apply (int DIM1, int DIM2, int *INPLACE_ARRAY2) {(int nq, int num_results, int *results)}
+
+%apply (int DIM1, int DIM2, float *IN_ARRAY2) {(int nq, int d, float *queries)}
+%apply (int DIM1, int DIM2, float *IN_ARRAY2) {(int nb, int d, float *vertices)}
+
+%apply (int DIM1, int DIM2, int *IN_ARRAY2) {(int nq, int max_degree, int *edges)}
+%apply (int DIM1, int DIM2, int *INPLACE_ARRAY2) {(int nq, int max_path, int *trajectories)}
+
+%apply int *INPUT {int *initial_vertex_id, int *ef, int *nt}
+
+%include "search_hnsw.h"
