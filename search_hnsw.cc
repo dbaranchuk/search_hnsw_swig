@@ -59,8 +59,8 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
 
                 if (visited_ids.count(neighbor_id) > 0) continue;
 
-                std::cout << uniform <<  " ";
-                *action = prob > uniform;
+                std::cout << uniform(generator) <<  " ";
+                *action = prob > uniform(generator);
                 if (*action == 0) continue;
 
                 visited_ids.insert(neighbor_id);
