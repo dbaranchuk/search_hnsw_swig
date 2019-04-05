@@ -30,10 +30,10 @@ typedef unsigned idx_t;
 float fvec_L2sqr(const float *x, const float *y, size_t d);
 
 void find_nearest(int nq, int num_results, int *results,       // matrix [n_queries, num_results]
-                  int nq, int d, float *queries,               // matrix [n_queries, vec_dimension]
-                  int nb, int d, float *vertices,              // matrix [n_vertices, vec_dimension]
-                  int nb, int max_degree, int *edges,          // matrix [n_queries, max_degree]
-                  int nq, int max_path, int *trajectories,     // matrix [n_queries, max_path]
+                  int nq1, int d, float *queries,              // matrix [n_queries, vec_dimension]
+                  int nb, int d1, float *vertices,             // matrix [n_vertices, vec_dimension]
+                  int nb1, int max_degree, int *edges,         // matrix [n_queries, max_degree]
+                  int nq2, int max_path, int *trajectories,    // matrix [n_queries, max_path]
                   int *initial_vertex_id,                      // number
                   int *ef,                                     // number
                   int *nt);                                    // number
