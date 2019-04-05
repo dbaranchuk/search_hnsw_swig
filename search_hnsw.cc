@@ -26,13 +26,13 @@ void find_nearest(int nq, int num_results, int *results,                 // matr
 
         const float *query = queries + d * q;
         const int *trajectory = trajectories + max_path * q;
-        float distance = fvec_L2sqr(query, vertices + d * initial_vertex_id, d);
+        float distance = fvec_L2sqr(query, vertices + d * *initial_vertex_id, d);
         size_t num_dcs = 1;
         size_t num_hops = 0;
 
-        ef_top.emplace(distance, initial_vertex_id);
-        candidates.emplace(-distance, initial_vertex_id);
-        visited_ids.insert(initial_vertex_id);
+        ef_top.emplace(distance, *initial_vertex_id);
+        candidates.emplace(-distance, *initial_vertex_id);
+        visited_ids.insert(*initial_vertex_id);
         float lowerBound = distance;
 
         while (!candidates.empty()) {
@@ -52,11 +52,11 @@ void find_nearest(int nq, int num_results, int *results,                 // matr
                     distance = fvec_L2sqr(query, vertices + d * neighbor_id, d);
                     num_dcs++;
 
-                    if (ef_top.top().first > distance || ef_top.size() < ef) {
+                    if (ef_top.top().first > distance || ef_top.size() < *ef) {
                         candidates.emplace(-distance, neighbor_id);
                         ef_top.emplace(distance, neighbor_id);
 
-                        if (ef_top.size() > ef)
+                        if (ef_top.size() > *ef)
                             ef_top.pop();
                         lowerBound = ef_top.top().first;
                     }
