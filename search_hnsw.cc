@@ -13,7 +13,7 @@ void find_nearest(int nq, int num_results, int *results,                 // matr
                   int *ef,                                               // number
                   int *nt)                                               // number
                   {
-    #pragma omp parallel for num_threads(*nt)
+ #pragma omp parallel for num_threads(*nt)
     for (size_t q = 0; q < nq; q++) {
         std::unordered_set <idx_t> visited_ids;
         std::priority_queue <std::pair<float, idx_t >> ef_top;

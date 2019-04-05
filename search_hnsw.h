@@ -36,4 +36,4 @@ void find_nearest(int nq, int num_results, int *results,       // matrix [n_quer
                   int nq, int max_path, int *trajectories,     // matrix [n_queries, max_path]
                   int *initial_vertex_id,                      // number
                   int *ef,                                     // number
-                  int *nt)                                     // number
+                  int *nt);                                    // number
