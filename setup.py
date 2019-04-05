@@ -20,7 +20,8 @@ except AttributeError:
 _search_hnsw = Extension("_search_hnsw",
                          ["search_hnsw.i","search_hnsw.cc"],
                         include_dirs = [numpy_include],
-                        extra_compile_args=["-fopenmp"],
+                        extra_compile_args=["-fopenmp", "-march=native", 
+                                            "-ftree-vectorize", "-ftree-vectorizer-verbose=0"],
                         extra_link_args=['-lgomp'],
                         swig_opts=['-threads']
                         )
