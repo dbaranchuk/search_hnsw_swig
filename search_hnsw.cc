@@ -20,7 +20,6 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
     assert(max_degree ==  max_degree1);
     assert(*nt > 0 && *ef > 0);
 
-
     std::default_random_engine generator;
     std::uniform_real_distribution<float> uniform(0.0, 1.0);
 
