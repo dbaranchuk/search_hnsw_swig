@@ -19,13 +19,13 @@ void find_nearest(int nq, int num_results, int *results,                 // matr
     assert(*nt > 0 && *ef > 0);
 
  #pragma omp parallel for num_threads(*nt)
-    for (size_t q = 0; q < nq; q++) {
+    for (int32_t q = 0; q < nq; q++) {
         std::unordered_set <idx_t> visited_ids;
         std::priority_queue <std::pair<float, idx_t >> ef_top;
         std::priority_queue <std::pair<float, idx_t >> candidates;
 
         const float *query = queries + d * q;
-        const int *trajectory = trajectories + max_path * q;
+        int *trajectory = trajectories + max_path * q;
         float distance = fvec_L2sqr(query, vertices + d * *initial_vertex_id, d);
         size_t num_dcs = 1;
         size_t num_hops = 0;
@@ -52,11 +52,11 @@ void find_nearest(int nq, int num_results, int *results,                 // matr
                     distance = fvec_L2sqr(query, vertices + d * neighbor_id, d);
                     num_dcs++;
 
-                    if (ef_top.top().first > distance || ef_top.size() < *ef) {
+                    if (ef_top.top().first > distance || ef_top.size() < (size_t) *ef) {
                         candidates.emplace(-distance, neighbor_id);
                         ef_top.emplace(distance, neighbor_id);
 
-                        if (ef_top.size() > *ef)
+                        if (ef_top.size() > (size_t) *ef)
                             ef_top.pop();
                         lowerBound = ef_top.top().first;
                     }
