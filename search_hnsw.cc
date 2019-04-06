@@ -23,8 +23,10 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
     std::default_random_engine generator;
     std::uniform_real_distribution<float> uniform(0.0, 1.0);
 
-#pragma omp parallel for num_threads(*nt)
+#pragma omp for num_threads(*nt)
     for (int32_t q = 0; q < nq; q++) {
+        generator.seed((int)(std::time(0)) ^ omp_get_thread_num());
+
         std::unordered_set <idx_t> visited_ids;
         std::priority_queue <std::pair<float, idx_t >> ef_top;
         std::priority_queue <std::pair<float, idx_t >> candidates;
@@ -59,7 +61,6 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
 
                 if (visited_ids.count(neighbor_id) > 0) continue;
 
-                std::cout << uniform(generator) <<  " ";
                 *action = prob > uniform(generator);
                 if (*action == 0) continue;
 
@@ -77,7 +78,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
                 }
             }
             trajectory[num_hops++] = vertex_id;
-            if (num_hops >= max_path) break;
+            if (num_hops >= (size_t) max_path) break;
         }
         results[num_results * q] = ef_top.top().second;
         results[num_results * q + 1] = num_dcs;
