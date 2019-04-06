@@ -6,7 +6,7 @@
 #include <omp.h>
 #include <cmath>
 #include <random>
-#include <сtime>
+#include <time.h>
 #include <unordered_set>
 
 

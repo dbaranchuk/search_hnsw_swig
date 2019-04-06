@@ -23,9 +23,9 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
     std::default_random_engine generator;
     std::uniform_real_distribution<float> uniform(0.0, 1.0);
 
-#pragma omp for num_threads(*nt)
+#pragma omp parallel for num_threads(*nt)
     for (int32_t q = 0; q < nq; q++) {
-        generator.seed((int)(std::time(0)) ^ omp_get_thread_num());
+        generator.seed((int)time(0) ^ omp_get_thread_num());
 
         std::unordered_set <idx_t> visited_ids;
         std::priority_queue <std::pair<float, idx_t >> ef_top;
