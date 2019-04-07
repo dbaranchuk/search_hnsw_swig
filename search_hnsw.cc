@@ -56,7 +56,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
             const float *probs = edge_probs + vertex_id * max_degree;
 
             size_t j = 0;
-            while (neighbor_ids[j] != -1) {
+            while (neighbor_ids[j] != -1 && j < max_degree) {
                 idx_t neighbor_id = neighbor_ids[j];
                 float prob = probs[j];
                 int *action = actions + num_hops * max_degree + j++;
