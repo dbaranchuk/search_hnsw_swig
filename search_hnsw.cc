@@ -34,7 +34,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
         std::priority_queue <std::pair<float, idx_t >> candidates;
 
         const float *query = queries + d * q;
-        int *actions = results + num_results * q + 3;
+        int *actions = results + num_results * q + *k + 2;
         int *trajectory = trajectories + max_path * q;
 
         float distance = fvec_L2sqr(query, vertices + d * *initial_vertex_id, d);
