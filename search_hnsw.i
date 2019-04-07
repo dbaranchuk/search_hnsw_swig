@@ -20,6 +20,6 @@
 %apply (int DIM1, int DIM2, int *INPLACE_ARRAY2) {(int nq1, int max_path, int *trajectories)}
 %apply (int DIM1, int DIM2, int *INPLACE_ARRAY2) {(int nq2, int num_results, int *results)}
 
-%apply int *INPUT {int *initial_vertex_id, int *ef, int *nt}
+%apply int *INPUT {int *k, int *initial_vertex_id, int *ef, int *nt}
 
 %include "search_hnsw.h"

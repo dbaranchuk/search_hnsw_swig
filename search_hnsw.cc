@@ -10,6 +10,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
                   int nq, int d, float *queries,                  // matrix [n_queries, vec_dimension]
                   int nq1, int max_path, int *trajectories,       // matrix [n_queries, max_path]
                   int nq2, int num_results, int *results,         // matrix [n_queries, 3 + num_actions] num_actions = max_degree * max_path
+                  int *k,                                         // number
                   int *initial_vertex_id,                         // number
                   int *ef,                                        // number
                   int *nt)                                        // number
@@ -19,13 +20,14 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
     assert(nb == nb1 == nb2);
     assert(max_degree ==  max_degree1);
     assert(*nt > 0 && *ef > 0);
+    assert(*k <= *ef);
 
     std::default_random_engine generator;
     std::uniform_real_distribution<float> uniform(0.0, 1.0);
 
-#pragma omp for num_threads(*nt)
+#pragma omp parallel for num_threads(*nt)
     for (int32_t q = 0; q < nq; q++) {
-        generator.seed((int)(std::time(0)) ^ omp_get_thread_num());
+        generator.seed((int)time(0) ^ omp_get_thread_num());
 
         std::unordered_set <idx_t> visited_ids;
         std::priority_queue <std::pair<float, idx_t >> ef_top;
@@ -80,9 +82,15 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
             trajectory[num_hops++] = vertex_id;
             if (num_hops >= (size_t) max_path) break;
         }
-        results[num_results * q] = ef_top.top().second;
-        results[num_results * q + 1] = num_dcs;
-        results[num_results * q + 2] = num_hops;
+
+        size_t answer_idx = *k - 1;
+        while (!ef_top.empty()){
+            if (ef_top.size() <= *k)
+                results[num_results * q + answer_idx--] = ef_top.top().second;
+            ef_top.pop();
+        }
+        results[num_results * q + *k] = num_dcs;
+        results[num_results * q + *k + 1] = num_hops;
     }
 }
 
