@@ -8,6 +8,7 @@
 #include <random>
 #include <time.h>
 #include <unordered_set>
+#include <stdlib.h>
 
 
 #ifdef _MSC_VER
