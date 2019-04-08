@@ -18,6 +18,7 @@
 
 %apply (int DIM1, int DIM2, float *IN_ARRAY2) {(int nq, int d, float *queries)}
 %apply (int DIM1, int DIM2, int *INPLACE_ARRAY2) {(int nq1, int max_path, int *trajectories)}
+%apply (int DIM1, int DIM2, float *IN_ARRAY2) {(int nq3, int num_actions, float *samples)}
 %apply (int DIM1, int DIM2, int *INPLACE_ARRAY2) {(int nq2, int num_results, int *results)}
 
 %apply int *INPUT {int *k, int *initial_vertex_id, int *ef, int *nt}

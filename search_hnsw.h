@@ -37,8 +37,20 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
                   int nb2, int max_degree1, float *edge_probs,    // matrix [n_vertices, max_degree]
                   int nq, int d, float *queries,                  // matrix [n_queries, vec_dimension]
                   int nq1, int max_path, int *trajectories,       // matrix [n_queries, max_path]
-                  int nq2, int num_results, int *results,         // matrix [n_queries, 3 + num_actions] num_actions = max_degree * max_path
+                  int nq3, int num_actions, float *samples,       // matrix [n_queries, num_actions] num_actions = max_degree * max_path
+                  int nq2, int num_results, int *results,         // matrix [n_queries, 3 + num_actions]
                   int *k,                                         // number
                   int *initial_vertex_id,                         // number
                   int *ef,                                        // number
                   int *nt);                                       // number
+
+//void find_nearest(int nb, int d1, float *vertices,                // matrix [n_vertices, vec_dimension]
+//                  int nb1, int max_degree, int *edges,            // matrix [n_vertices, max_degree]
+//                  int nb2, int max_degree1, float *edge_probs,    // matrix [n_vertices, max_degree]
+//                  int nq, int d, float *queries,                  // matrix [n_queries, vec_dimension]
+//                  int nq1, int max_path, int *trajectories,       // matrix [n_queries, max_path]
+//                  int nq2, int num_results, int *results,         // matrix [n_queries, 3 + num_actions] num_actions = max_degree * max_path
+//                  int *k,                                         // number
+//                  int *initial_vertex_id,                         // number
+//                  int *ef,                                        // number
+//                  int *nt);                                       // number
