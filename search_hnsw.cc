@@ -127,7 +127,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
 
     if (init_generator == 0){
         std::random_device rd;
-        generator = std::mt19937(rd())
+        generator = std::mt19937(rd());
         init_generator++;
 //        for (int32_t i = 0; i < nq; i++)
 //            generators[i] = std::mt19937(rd());
@@ -162,7 +162,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
             const float *probs = edge_probs + vertex_id * max_degree;
 
             size_t j = 0;
-            while (neighbor_ids[j] != -1 && j < max_degree) {
+            while (neighbor_ids[j] != -1 && j < (size_t) max_degree) {
                 const idx_t neighbor_id = neighbor_ids[j];
                 const float prob = probs[j];
                 int *action = actions + num_hops * max_degree + j++;
@@ -191,7 +191,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
 
         size_t answer_idx = *k - 1;
         while (!ef_top.empty()){
-            if (ef_top.size() <= *k)
+            if (ef_top.size() <= (size_t) *k)
                 results[num_results * q + answer_idx--] = ef_top.top().second;
             ef_top.pop();
         }
