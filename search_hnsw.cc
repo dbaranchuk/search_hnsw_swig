@@ -57,7 +57,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
             while (neighbor_ids[j] != -1 && j < max_degree) {
                 const idx_t neighbor_id = neighbor_ids[j];
                 const float prob = probs[j];
-                const float sample = uniform_samples[num_hops * max_degree + j]
+                const float sample = uniform_samples[num_hops * max_degree + j];
                 int *action = actions + num_hops * max_degree + j++;
 
                 if (visited_ids.count(neighbor_id) > 0) continue;
