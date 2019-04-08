@@ -92,6 +92,13 @@
 //    }
 //}
 
+//    static std::random_device rd;
+static int init_generator = 0;
+
+    //static std::vector<std::mt19937> generators(nq);
+static std::mt19937 generator;
+static std::uniform_real_distribution<double> uniform(0.0, 1.0);
+
 
 void find_nearest(int nb, int d1, float *vertices,                // matrix [n_vertices, vec_dimension]
                   int nb1, int max_degree, int *edges,            // matrix [n_vertices, max_degree]
@@ -111,14 +118,22 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
     assert(*nt > 0 && *ef > 0);
     assert(*k <= *ef);
 
-    std::random_device rd;
-    std::vector<std::mt19937> generators(nq);
-    std::uniform_real_distribution<double> uniform(0.0, 1.0);
+////    static std::random_device rd;
+//    static int init_generator = 0;
+//
+//    //static std::vector<std::mt19937> generators(nq);
+//    static std::mt19937 generator;
+//    static std::uniform_real_distribution<double> uniform(0.0, 1.0);
 
-    for (int32_t i = 0; i < nq; i++)
-        generators[i] = std::mt19937(rd());
+    if (init_generator == 0){
+        std::random_device rd;
+        generator = std::mt19937(rd())
+        init_generator++;
+//        for (int32_t i = 0; i < nq; i++)
+//            generators[i] = std::mt19937(rd());
+    }
 
-#pragma omp parallel for num_threads(*nt)
+//#pragma omp parallel for num_threads(*nt)
     for (int32_t q = 0; q < nq; q++) {
         std::unordered_set <idx_t> visited_ids;
         std::priority_queue <std::pair<float, idx_t >> ef_top;
@@ -154,7 +169,7 @@ void find_nearest(int nb, int d1, float *vertices,                // matrix [n_v
 
                 if (visited_ids.count(neighbor_id) > 0) continue;
 
-                *action = prob > uniform(generators[q]);
+                *action = prob > uniform(generator);
                 if (*action == 0) continue;
 
                 visited_ids.insert(neighbor_id);
